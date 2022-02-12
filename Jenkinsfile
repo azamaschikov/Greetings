@@ -50,7 +50,7 @@ pipeline {
             }
         }
 
-        stage("Clean Local Docker Images") {
+        stage("Clean Local Registry") {
             steps {
                 sh "docker image prune --all --force"
             }
