@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         IMAGE_TAG           = "v0.0.0"
-        IMAGE_NAME          = "greetings:${env.IMAGE_TAG}"
+        IMAGE_NAME          = "azamaschikov/greetings:${env.IMAGE_TAG}"
 
         REPOSITORY_BRANCH   = "main"
         REPOSITORY_ADDRESS  = "https://github.com/azamaschikov/Greetings"
@@ -18,7 +18,7 @@ pipeline {
 
     stages {
 
-        stage("Clean Work Directory") {
+        stage("Clean Working Directory") {
             steps {
                 cleanWs()
             }
