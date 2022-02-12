@@ -2,12 +2,16 @@ pipeline {
 
     agent any
 
+    parameters {
+        string(name: 'APP_VERSION', defaultValue: 'v0.0.0', description: 'Which version of application')
+    }
+
     options {
         disableConcurrentBuilds()
     }
 
     environment {
-        IMAGE_TAG           = "v0.0.0"
+        IMAGE_TAG           = "${env.APP_VERSION}"
         IMAGE_NAME          = "azamaschikov/greetings:${env.IMAGE_TAG}"
 
         REPOSITORY_BRANCH   = "main"
@@ -43,6 +47,12 @@ pipeline {
                     sh "docker login --username ${env.USERNAME} --password ${env.PASSWORD}"
                     sh "docker push ${env.IMAGE_NAME}"
                 }
+            }
+        }
+
+        stage("Clean Local Docker Images") {
+            steps {
+                sh "docker image prune --all --force"
             }
         }
 
