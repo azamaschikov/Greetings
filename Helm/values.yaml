@@ -1,0 +1,7 @@
+---
+app:
+  name: "greetings"
+  image: "azamaschikov/greetings:1.0.0"
+
+replicas:
+  count: 1
