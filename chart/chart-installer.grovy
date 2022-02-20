@@ -1,1 +1,43 @@
+pipeline {
 
+    agent any
+
+    options {
+        disableConcurrentBuilds()
+    }
+
+    environment {
+        APP_NAME              = "greetings"
+
+        REPOSITORY_BRANCH     = "main"
+        REPOSITORY_ADDRESS    = "https://github.com/azamaschikov/Greetings"
+
+        REGISTRY_CREDENTIAL   = "9e21e98d-07fd-4511-8fd6-5421de60a916"
+        KUBERNETES_CREDENTIAL = "6ec02531-ef1c-4edb-a058-cd0da0db6ec8"
+    }
+
+    stages {
+
+        stage("Clean Working Directory") {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage("Clone Repository") {
+            steps {
+                checkout([$class: "GitSCM", branches: [[name: REPOSITORY_BRANCH]],
+                userRemoteConfigs: [[url: REPOSITORY_ADDRESS]]])
+            }
+        }
+
+        stage("Deploy To Kubernetes") {
+            steps {
+                withCredentials([file(credentialsId: KUBERNETES_CREDENTIAL, variable: 'KUBECONFIG')]) {
+                    sh "helm install $APP_NAME --values chart/values.yaml --kubeconfig $KUBECONFIG ./chart"
+                }
+            }
+        }
+
+    }
+}
