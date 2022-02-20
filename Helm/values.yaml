@@ -1,6 +1,7 @@
 app:
-  name: "greetings"
-  image: "azamaschikov/greetings:1.0.0"
+  name: greetings
+  repo: azamaschikov
+  version: 1.0.0
 
 replicas:
-  count: "3"
+  count: 3
