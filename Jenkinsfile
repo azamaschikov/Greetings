@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: "APP_VERSION", defaultValue: "v0.0.0", description: "Which version of application")
+        string(name: "APP_VERSION", defaultValue: "0.0.0", description: "Which version of application")
     }
 
     options {
