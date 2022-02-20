@@ -34,7 +34,7 @@ pipeline {
         stage("Deploy To Kubernetes") {
             steps {
                 withCredentials([file(credentialsId: KUBERNETES_CREDENTIAL, variable: 'KUBECONFIG')]) {
-                    sh "helm install $APP_NAME --values chart/values.yaml --kubeconfig $KUBECONFIG ./chart"
+                    sh "helm install $APP_NAME --values helm/values.yaml --kubeconfig $KUBECONFIG ./helm"
                 }
             }
         }
